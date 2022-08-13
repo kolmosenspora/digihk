@@ -4,6 +4,7 @@ import './index.css';
 import TallennaTuote from './TallennaTuote';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import NaytaTuotteet from "./NaytaTuotteet";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -20,6 +21,7 @@ root.render(
       <ApolloProvider client={client}>
     <TallennaTuote >
     </TallennaTuote>
+          <NaytaTuotteet></NaytaTuotteet>
       </ApolloProvider>
   </React.StrictMode>
 );
