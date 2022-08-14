@@ -1,11 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import { gql, useQuery } from '@apollo/client';
-import {useState} from "react";
-import {click} from "@testing-library/user-event/dist/click";
+import NaytaYksiTuote from "./NaytaYksiTuote";
+import {useContext} from "react";
+import {SigninContext} from "./App";
+
 
 
 function NaytaTuotteet() {
+    const { userName, setUserName, setDisplayProfile } = useContext(SigninContext)
 
     const GET_TUOTTEET = gql`
   query MyQuery {
@@ -15,11 +17,15 @@ function NaytaTuotteet() {
 }
 `;
 
-
     const { loading, error, data } = useQuery(GET_TUOTTEET);
 
-    console.log(data)
 
+
+
+    const naytaTuote = (tyokone) => {
+        setUserName("naytatuote")
+        setDisplayProfile(tyokone)
+    }
 
 
     let listItems = "";
@@ -28,15 +34,21 @@ function NaytaTuotteet() {
              <li key={tyokone.id}>
              <div>
                  {tyokone.id}
-                 <button onClick={event => console.log(tyokone.id)}>Näytä sisältö</button>
+                 <button onClick={event => naytaTuote(tyokone.id)}>Näytä sisältö</button>
              </div>
              </li>);
+
+
     }
+
+
+
 
 return (
     <div>
         <h1>Näytä tuotteet</h1>
         <ul>{listItems}</ul>
+        <button onClick={event => setUserName('lisaa')}>Vaihda Sivu</button>
     </div>
 
 

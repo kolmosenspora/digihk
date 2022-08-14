@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {createContext, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import TallennaTuote from './TallennaTuote';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import NaytaTuotteet from "./NaytaTuotteet";
+import NaytaYksiTuote from "./NaytaYksiTuote";
+import App from "./App";
+import {Route, Router, Routes} from "react-router-dom";
+import TuoteAville from "./TuoteAville";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,12 +20,17 @@ const client = new ApolloClient({
 
 });
 
+
+
+
 root.render(
+
+
   <React.StrictMode>
       <ApolloProvider client={client}>
-    <TallennaTuote >
-    </TallennaTuote>
-          <NaytaTuotteet></NaytaTuotteet>
+
+        <App></App>
+
       </ApolloProvider>
   </React.StrictMode>
 );
