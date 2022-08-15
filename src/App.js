@@ -37,6 +37,7 @@ return (
 
 
     <div>
+        <header className={"App-header"}>Huoltokirjat</header>
         <SigninContext.Provider
             value={{ userName, setUserName, displayProfile, setDisplayProfile }}
         >
@@ -44,6 +45,11 @@ return (
             {mikaSivu()}
 
         </SigninContext.Provider>
+        <footer className={"App-footer"}>
+            <a href={"/"}>Etusivu</a>
+            <button onClick={event => setUserName('lisaa')}>Lisää uusi laite</button>
+
+            Footeri!</footer>
     </div>
 
 

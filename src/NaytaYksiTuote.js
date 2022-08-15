@@ -1,11 +1,13 @@
 import './App.css';
 import {gql, useMutation, useQuery} from '@apollo/client';
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {SigninContext} from "./App";
 import TallennaHuolto from "./TallennaHuolto";
 
 function NaytaYksiTuote() {
     const { displayProfile } = useContext(SigninContext)
+    const [refresh, setRefresh] = useState(true);
+
 
 
     const GET_TUOTE = gql`
@@ -48,36 +50,48 @@ query MyQuery($type: String!) {
  //   });
 
 
+    const onkoHuolotto = () => {
+        console.log("tuli ekaan")
+        if (data.huolto[0]) {
 
-    if (data) {
-        console.log(data.huolto[0].lisatiedot)
-
+            console.log("kuoli tokaan")
         return (
-            <div>
-            <div>
-                <h1>Näytä yksi tuote</h1>
-                <h2>Tuote nimi = {data.tyokone[0].id}</h2>
-                <h2>Tuote malli = {data.tyokone[0].malli}</h2>
-                <h2>yritys = {data.tyokone[0].yritys}</h2>
-                <h2>Vapaateksti = {data.tyokone[0].vapaateksti}</h2>
-                <h2>Lisatietoja = {data.tyokone[0].lisatietoja}</h2>
-            </div>
 
-                <div>Laitteen huollot!</div>
-                <ul>
-                    {data.huolto.map((huolto => {
-                        return (
+            <ul>
+                {data.huolto.map((huolto => {
+                    return (
                         <li key={huolto.monesko}>
-                            <div>
+                            <div className={"App-body-laite"}>
                                 <h1>{huolto.lisatiedot}</h1>
+                                <h2>Tehty maanantaina 22.12.2021 kello 15.45</h2>
+                                <h2>Huollon suoritti Anssi Peipponen</h2>
                             </div>
                         </li>
-                        )
-                    }))}
+                    )
+                }))}
 
 
 
             </ul>
+        )
+        }
+    }
+
+    if (data) {
+
+        return (
+            <div>
+            <div className={"App-body-laite"}>
+                <h2>Laitteen nimi: {data.tyokone[0].id}</h2>
+                <h2>Laite malli: {data.tyokone[0].malli}</h2>
+                <h2>yritys: {data.tyokone[0].yritys}</h2>
+                <h2>Vapaateksti: {data.tyokone[0].vapaateksti}</h2>
+                <h2>Lisatietoja: {data.tyokone[0].lisatietoja}</h2>
+            </div>
+
+                <h1>Laitteen Huollot:</h1>
+                {onkoHuolotto()}
+
 
 
             <div>
@@ -85,6 +99,8 @@ query MyQuery($type: String!) {
 
                 </TallennaHuolto>
             </div>
+
+                <a href={"/tuotenumero?=" + data.tyokone[0].id}>Näytä QR koodi ja avin näkymä</a>
             </div>
         )
     }

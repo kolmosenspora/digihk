@@ -19,7 +19,8 @@ insert_huolto(objects: {id: $type, lisatiedot: $lisatietoja, paivamaara: "23-5-1
 
     const saveTuote = () => {
         addTodo({variables: {type: tuotenimi, lisatietoja: lisatietoja}}).then(r => console.log(r));
-     }
+
+    }
 
 
     const { displayProfile } = useContext(SigninContext)

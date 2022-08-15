@@ -1,7 +1,7 @@
 import './App.css';
 import { gql, useQuery } from '@apollo/client';
 import NaytaYksiTuote from "./NaytaYksiTuote";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {SigninContext} from "./App";
 
 
@@ -10,12 +10,19 @@ function NaytaTuotteet() {
     const { userName, setUserName, setDisplayProfile } = useContext(SigninContext)
 
     const GET_TUOTTEET = gql`
-  query MyQuery {
+query MyQuery {
   tyokone {
     id
+    lisatietoja
+    malli
+    vapaateksti
+    yritys
   }
 }
 `;
+
+
+
 
     const { loading, error, data } = useQuery(GET_TUOTTEET);
 
@@ -32,9 +39,11 @@ function NaytaTuotteet() {
     if (data){
          listItems = data.tyokone.map((tyokone) =>
              <li key={tyokone.id}>
-             <div>
-                 {tyokone.id}
-                 <button onClick={event => naytaTuote(tyokone.id)}>Näytä sisältö</button>
+             <div className={"App-kortti"} onClick={event => naytaTuote(tyokone.id)}>
+                 <h3>Sarjanumero: {tyokone.id}</h3>
+                 <h3>Merkki: {tyokone.merkki}</h3>
+                 <h3>Malli: {tyokone.malli}</h3>
+
              </div>
              </li>);
 
@@ -45,10 +54,9 @@ function NaytaTuotteet() {
 
 
 return (
-    <div>
-        <h1>Näytä tuotteet</h1>
+    <div className={"App-body"}>
+        <h1>Kaikki huoltokirjat:</h1>
         <ul>{listItems}</ul>
-        <button onClick={event => setUserName('lisaa')}>Vaihda Sivu</button>
     </div>
 
 

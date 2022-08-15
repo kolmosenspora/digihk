@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { gql, useMutation } from '@apollo/client';
-import {useState} from "react";
+import React, {useContext, useState} from "react";
+import {SigninContext} from "./App";
 
 function TallennaTuote() {
 
@@ -17,6 +18,7 @@ function TallennaTuote() {
     const [addTodo, { data, loading, error }] = useMutation(ADD_TODO);
 
 
+    const { setUserName } = useContext(SigninContext)
 
 
 
@@ -24,6 +26,7 @@ function TallennaTuote() {
 
     const saveTuote = () => {
         addTodo({variables: {type: tuotenimi, lisatietoja: lisatietoja, malli: malli, vapaateksti: vapaateksti, yritys: yritys}}).then(r => console.log(r));
+        setUserName('alku')
      }
 
      const [tuotenimi, setTuotenimi] = useState('');
@@ -35,9 +38,9 @@ function TallennaTuote() {
 
   return (
 
-    <div className="App">
+    <div className="App-body">
 
-        <p>Jee</p>
+        <p>Lisää uusi laite</p>
 
         <input placeholder={"Sarjanumero"} onChange={event => setTuotenimi(event.target.value)}></input>
         <input placeholder={"Malli"} onChange={event => setmalli(event.target.value)}></input>
