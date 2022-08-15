@@ -41,8 +41,9 @@ query MyQuery {
              <li key={tyokone.id}>
              <div className={"App-kortti"} onClick={event => naytaTuote(tyokone.id)}>
                  <h3>Sarjanumero: {tyokone.id}</h3>
-                 <h3>Merkki: {tyokone.merkki}</h3>
                  <h3>Malli: {tyokone.malli}</h3>
+                 <h3>Yritys: {tyokone.yritys}</h3>
+
 
              </div>
              </li>);
