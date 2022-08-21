@@ -66,11 +66,18 @@ query MyQuery($type: String!) {
         return (
             <div>
                 <div className={"App-body-laite"}>
-                    <h2>Laitteen nimi: {data.tyokone[0].id}</h2>
-                    <h2>Laite malli: {data.tyokone[0].malli}</h2>
-                    <h2>yritys: {data.tyokone[0].yritys}</h2>
-                    <h2>Vapaateksti: {data.tyokone[0].vapaateksti}</h2>
-                    <h2>Lisatietoja: {data.tyokone[0].lisatietoja}</h2>
+                    <h2>Laitteen sarjanumero: {data.tyokone[0].id}</h2>
+                    <h2>Malli: {data.tyokone[0].malli}</h2>
+                    <h2>Valmistaja: {data.tyokone[0].yritys}</h2>
+                    <h2>Omistaja: {data.tyokone[0].yritys}</h2>
+                    <div>
+
+                    </div>
+                    <h2>Vapaateksti:</h2>
+                    <textarea about={"Vapaateksti"} >{data.tyokone[0].vapaateksti}</textarea>
+
+                    <h2>Lisätietoja:</h2>
+                    <textarea about={"Lisätietoja"} >{data.tyokone[0].lisatietoja}</textarea>
                 </div>
 
                 <h1>Laitteen Huollot:</h1>

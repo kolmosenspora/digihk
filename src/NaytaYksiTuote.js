@@ -87,6 +87,7 @@ query MyQuery($type: String!) {
                 <h2>yritys: {data.tyokone[0].yritys}</h2>
                 <h2>Vapaateksti: {data.tyokone[0].vapaateksti}</h2>
                 <h2>Lisatietoja: {data.tyokone[0].lisatietoja}</h2>
+
             </div>
 
                 <h1>Laitteen Huollot:</h1>
