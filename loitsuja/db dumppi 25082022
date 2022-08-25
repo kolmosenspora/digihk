@@ -1,0 +1,60 @@
+SET check_function_bodies = false;
+CREATE TABLE public.dopmittaus (
+    monesko integer NOT NULL,
+    lisatietoja text NOT NULL,
+    paivamaara text NOT NULL,
+    id text NOT NULL,
+    tekija text
+);
+CREATE SEQUENCE public.dopmittaus_monesko_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.dopmittaus_monesko_seq OWNED BY public.dopmittaus.monesko;
+CREATE TABLE public.huolto (
+    id text NOT NULL,
+    monesko integer NOT NULL,
+    lisatiedot text NOT NULL,
+    paivamaara text NOT NULL,
+    suodattimet text,
+    tekija text
+);
+CREATE SEQUENCE public.huolto_monesko_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.huolto_monesko_seq OWNED BY public.huolto.monesko;
+CREATE TABLE public.tyokone (
+    id text NOT NULL,
+    yritys text,
+    malli text,
+    vapaateksti text,
+    lisatietoja text,
+    merkki text,
+    ostopvm date,
+    teho text,
+    tyyppi text,
+    hertz text,
+    ampeeri text,
+    paino text,
+    voltit text,
+    ce text
+);
+ALTER TABLE ONLY public.dopmittaus ALTER COLUMN monesko SET DEFAULT nextval('public.dopmittaus_monesko_seq'::regclass);
+ALTER TABLE ONLY public.huolto ALTER COLUMN monesko SET DEFAULT nextval('public.huolto_monesko_seq'::regclass);
+ALTER TABLE ONLY public.dopmittaus
+    ADD CONSTRAINT dopmittaus_pkey PRIMARY KEY (monesko);
+ALTER TABLE ONLY public.huolto
+    ADD CONSTRAINT huolto_pkey PRIMARY KEY (monesko);
+ALTER TABLE ONLY public.tyokone
+    ADD CONSTRAINT tyokone_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.dopmittaus
+    ADD CONSTRAINT dopmittaus_id_fkey FOREIGN KEY (id) REFERENCES public.tyokone(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.huolto
+    ADD CONSTRAINT huolto_id_fkey FOREIGN KEY (id) REFERENCES public.tyokone(id) ON UPDATE RESTRICT ON DELETE RESTRICT;

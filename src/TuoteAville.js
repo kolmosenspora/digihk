@@ -16,6 +16,12 @@ query MyQuery($type: String!) {
   huolto(where: {id: {_eq: $type}}) {
     lisatiedot
     paivamaara
+    tekija
+  }
+    dopmittaus(where: {id: {_eq: $type}}) {
+    lisatietoja
+    paivamaara
+    tekija
   }
 }
 `;
@@ -38,15 +44,18 @@ query MyQuery($type: String!) {
 
             console.log("kuoli tokaan")
             return (
+                <div>
+                    <h1>Huollot:</h1>
 
                 <ul>
                     {data.huolto.map((huolto => {
                         return (
                             <li key={huolto.monesko}>
                                 <div className={"App-body-laite"}>
-                                    <h1>{huolto.lisatiedot}</h1>
-                                    <h2>Tehty maanantaina 22.12.2021 kello 15.45</h2>
-                                    <h2>Huollon suoritti Anssi Peipponen</h2>
+                                    <h1>Tiedot: {huolto.lisatiedot}</h1>
+                                    <p>Päivämäärä: {huolto.paivamaara}</p>
+                                    <p>Huoltaja: {huolto.tekija}</p>
+                                    <p>Onko suodattimet vaihdettu?: {huolto.suodattimet}</p>
                                 </div>
                             </li>
                         )
@@ -55,6 +64,37 @@ query MyQuery($type: String!) {
 
 
                 </ul>
+                </div>
+            )
+        }
+    }
+
+    const onkoDop = () => {
+        console.log("tuli ekaan")
+        if (data.huolto[0]) {
+
+            console.log("kuoli tokaan")
+            return (
+                <div>
+                    <h1>Dop Mittaukset:</h1>
+
+                    <ul>
+                        {data.dopmittaus.map((dopmittaus => {
+                            return (
+                                <li key={dopmittaus.monesko}>
+                                    <div className={"App-body-laite"}>
+                                        <h1>Tiedot: {dopmittaus.lisatiedot}</h1>
+                                        <p>Päivämäärä: {dopmittaus.paivamaara}</p>
+                                        <p>Huoltaja: {dopmittaus.tekija}</p>
+                                    </div>
+                                </li>
+                            )
+                        }))}
+
+
+
+                    </ul>
+                </div>
             )
         }
     }
@@ -66,10 +106,22 @@ query MyQuery($type: String!) {
         return (
             <div>
                 <div className={"App-body-laite"}>
-                    <h2>Laitteen sarjanumero: {data.tyokone[0].id}</h2>
-                    <h2>Malli: {data.tyokone[0].malli}</h2>
-                    <h2>Valmistaja: {data.tyokone[0].yritys}</h2>
-                    <h2>Omistaja: {data.tyokone[0].yritys}</h2>
+                    <div>
+                        <h1>Laitteen tiedot:</h1>
+                    </div>
+                    <p>Sarjanumero: {data.tyokone[0].id}</p>
+                    <p>Malli: {data.tyokone[0].malli}</p>
+                    <p>Valmistaja: {data.tyokone[0].merkki}</p>
+                    <p>Omistaja: {data.tyokone[0].yritys}</p>
+
+                    <p>Tyyppi: {data.tyokone[0].tyyppi}</p>
+                    <p>Osto pvm: {data.tyokone[0].ostopvm}</p>
+                    <p>Teho: {data.tyokone[0].teho}</p>
+                    <p>A: {data.tyokone[0].ampeeri}</p>
+                    <p>Paino: {data.tyokone[0].paino}</p>
+                    <p>Voltit: {data.tyokone[0].voltit}</p>
+                    <p>Ce: {data.tyokone[0].ce}</p>
+
                     <div>
 
                     </div>
@@ -80,8 +132,10 @@ query MyQuery($type: String!) {
                     <textarea about={"Lisätietoja"} >{data.tyokone[0].lisatietoja}</textarea>
                 </div>
 
-                <h1>Laitteen Huollot:</h1>
                 {onkoHuolotto()}
+
+                {onkoDop()}
+
 
 
 
