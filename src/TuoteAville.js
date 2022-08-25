@@ -12,6 +12,7 @@ query MyQuery($type: String!) {
     malli
     vapaateksti
     yritys
+    merkki
     tyyppi
     ostopvm
     teho
