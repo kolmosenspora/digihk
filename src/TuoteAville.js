@@ -12,25 +12,26 @@ query MyQuery($type: String!) {
     malli
     vapaateksti
     yritys
-  }
-  huolto(where: {id: {_eq: $type}}) {
-    lisatiedot
-    paivamaara
-    tekija
     tyyppi
     ostopvm
     teho
     ampeeri
     paino
     voltit
-    ce
-           
+    ce   
+  }
+  huolto(where: {id: {_eq: $type}}) {
+    lisatiedot
+    paivamaara
+    tekija
+    suodattimet                      
+
   }
     dopmittaus(where: {id: {_eq: $type}}) {
     lisatietoja
     paivamaara
     tekija
-    suodattimet                      
+                         
   }
 }
 `;
