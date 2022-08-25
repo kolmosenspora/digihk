@@ -17,11 +17,20 @@ query MyQuery($type: String!) {
     lisatiedot
     paivamaara
     tekija
+    tyyppi
+    ostopvm
+    teho
+    ampeeri
+    paino
+    voltit
+    ce
+           
   }
     dopmittaus(where: {id: {_eq: $type}}) {
     lisatietoja
     paivamaara
     tekija
+    suodattimet                      
   }
 }
 `;
@@ -52,7 +61,7 @@ query MyQuery($type: String!) {
                         return (
                             <li key={huolto.monesko}>
                                 <div className={"App-body-laite"}>
-                                    <h1>Tiedot: {huolto.lisatiedot}</h1>
+                                    <p>Tiedot: {huolto.lisatietoja}</p>
                                     <p>Päivämäärä: {huolto.paivamaara}</p>
                                     <p>Huoltaja: {huolto.tekija}</p>
                                     <p>Onko suodattimet vaihdettu?: {huolto.suodattimet}</p>
