@@ -7,3 +7,7 @@
 7. click connect database
 8. go to sql page
 9. insert db dumppi (latest)
+
+Frontend runs on port 3000
+Backend runs on port 8080
+DB runs on port 5432
