@@ -1,10 +1,7 @@
 import './App.css';
 import { gql, useQuery } from '@apollo/client';
-import NaytaYksiTuote from "./NaytaYksiTuote";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {SigninContext} from "./App";
-
-
 
 function NaytaTuotteet() {
     const { userName, setUserName, setDisplayProfile } = useContext(SigninContext)
@@ -21,19 +18,12 @@ query MyQuery {
 }
 `;
 
-
-
-
     const { loading, error, data } = useQuery(GET_TUOTTEET);
-
-
-
 
     const naytaTuote = (tyokone) => {
         setUserName("naytatuote")
         setDisplayProfile(tyokone)
     }
-
 
     let listItems = "";
     if (data){
@@ -43,16 +33,9 @@ query MyQuery {
                  <h3>Sarjanumero: {tyokone.id}</h3>
                  <h3>Malli: {tyokone.malli}</h3>
                  <h3>Yritys: {tyokone.yritys}</h3>
-
-
              </div>
              </li>);
-
-
     }
-
-
-
 
 return (
     <div className={"App-body"}>
@@ -62,7 +45,6 @@ return (
 
 
 )
-
 }
 
 export default NaytaTuotteet;

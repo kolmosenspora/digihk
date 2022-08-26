@@ -1,6 +1,5 @@
 import {gql, useQuery} from "@apollo/client";
 import Qrkoodi from "./Qrkoodi";
-import TallennaHuolto from "./TallennaHuolto";
 
 function TuoteAville() {
 
@@ -36,28 +35,19 @@ query MyQuery($type: String!) {
   }
 }
 `;
-    console.log(window.location.search)
 
     let displayProfile = window.location.search.split('?=')[1];
     const type = displayProfile;
-
-    console.log(displayProfile)
-
-
 
     const { loading, error, data } = useQuery(GET_TUOTE, {
         variables: { type },
     });
 
     const onkoHuolotto = () => {
-        console.log("tuli ekaan")
         if (data.huolto[0]) {
-
-            console.log("kuoli tokaan")
             return (
                 <div>
                     <h1>Huollot:</h1>
-
                 <ul>
                     {data.huolto.map((huolto => {
                         return (
@@ -81,10 +71,7 @@ query MyQuery($type: String!) {
     }
 
     const onkoDop = () => {
-        console.log("tuli ekaan")
         if (data.huolto[0]) {
-
-            console.log("kuoli tokaan")
             return (
                 <div>
                     <h1>Dop Mittaukset:</h1>
@@ -101,9 +88,6 @@ query MyQuery($type: String!) {
                                 </li>
                             )
                         }))}
-
-
-
                     </ul>
                 </div>
             )
@@ -147,9 +131,6 @@ query MyQuery($type: String!) {
 
                 {onkoDop()}
 
-
-
-
                 <Qrkoodi>
 
                 </Qrkoodi>
@@ -159,7 +140,7 @@ query MyQuery($type: String!) {
     }
                 return(
         <div>
-            <h1>Toimii!</h1>
+            <h1>Lataa!</h1>
         </div>
     )
 

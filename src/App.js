@@ -11,16 +11,13 @@ function App() {
     const [userName, setUserName] = React.useState('alku')
     const [displayProfile, setDisplayProfile] = React.useState("tunnus")
 
-
-    console.log(window.location.pathname)
-
     useEffect(() => {
         if (window.location.pathname.includes('tuotenumero')) {
             setUserName(window.location.search);
         }
     }, []);
 
-const mikaSivu = () => {
+const whichPage = () => {
 
     if (userName === 'alku') return (<NaytaTuotteet></NaytaTuotteet>)
 
@@ -30,26 +27,20 @@ const mikaSivu = () => {
 
     if (userName.includes('?')) return (<TuoteAville></TuoteAville>)
 
-
 }
 
 return (
-
-
     <div>
         <header className={"App-header"}>Huoltokirjat</header>
         <SigninContext.Provider
             value={{ userName, setUserName, displayProfile, setDisplayProfile }}
         >
-
-            {mikaSivu()}
-
+            {whichPage()}
         </SigninContext.Provider>
         <footer className={"App-footer"}>
             <a href={"/"}>Etusivu</a>
             <button onClick={event => setUserName('lisaa')}>Lisää uusi laite</button>
-
-            Footeri!</footer>
+            </footer>
     </div>
 
 

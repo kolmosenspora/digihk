@@ -8,8 +8,6 @@ function NaytaYksiTuote() {
     const { displayProfile } = useContext(SigninContext)
     const [refresh, setRefresh] = useState(true);
 
-
-
     const GET_TUOTE = gql`
 query MyQuery($type: String!) {
   tyokone(where: {id: {_eq: $type}}) {
@@ -26,29 +24,11 @@ query MyQuery($type: String!) {
 }
 `;
 
-//   const GET_HUOLLOT = gql`
-//uery MyQuery($type: String!) {
-//   huolto(where: {id: {_eq: $type}}) {
-//   lisatiedot
-//   paivamaara
-// }
-//
-//;
-
-
-
     const type = displayProfile;
-
-
 
     const { loading, error, data } = useQuery(GET_TUOTE, {
         variables: { type },
     });
-
- //   const { loading1, error1, data1 } = useQuery(GET_HUOLLOT, {
- //       variables: { type },
- //   });
-
 
     const onkoHuolotto = () => {
         console.log("tuli ekaan")
@@ -78,7 +58,6 @@ query MyQuery($type: String!) {
     }
 
     if (data) {
-
         return (
             <div>
             <div className={"App-body-laite"}>

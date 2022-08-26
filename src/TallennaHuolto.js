@@ -13,13 +13,10 @@ insert_huolto(objects: {id: $type, lisatiedot: $lisatietoja, paivamaara: "23-5-1
   }
    }`;
 
-    const [addTodo, { data, loading, error }] = useMutation(ADD_TODO);
-
-
+    const [addTuote, { data, loading, error }] = useMutation(ADD_TODO);
 
     const saveTuote = () => {
-        addTodo({variables: {type: tuotenimi, lisatietoja: lisatietoja}}).then(r => console.log(r));
-
+        addTuote({variables: {type: tuotenimi, lisatietoja: lisatietoja}}).then(r => console.log(r));
     }
 
 
@@ -28,20 +25,12 @@ insert_huolto(objects: {id: $type, lisatiedot: $lisatietoja, paivamaara: "23-5-1
 
     const [lisatietoja, setlisatietoja] = useState('');
 
-
-
   return (
 
     <div className="App">
-
         <h1>Huolto: </h1>
         <p>Tallenna huolto! </p>
-
-
         <input placeholder={"lisatietoja"} onChange={event => setlisatietoja(event.target.value)}></input>
-
-
-
         <button onClick={saveTuote}>Tallenna</button>
     </div>
   );
