@@ -5,11 +5,15 @@ import { createContext } from "react";
 import NaytaYksiTuote from "./NaytaYksiTuote";
 import {Route, Router, Routes} from "react-router-dom";
 import TuoteAville from "./TuoteAville";
+import Login from "./Login";
+import {Auth0Client} from "@auth0/auth0-spa-js";
 export const SigninContext = createContext({})
 
 function App() {
     const [userName, setUserName] = React.useState('alku')
     const [displayProfile, setDisplayProfile] = React.useState("tunnus")
+    const [user, setUser] = React.useState("null")
+
 
     useEffect(() => {
         if (window.location.pathname.includes('tuotenumero')) {
@@ -17,7 +21,8 @@ function App() {
         }
     }, []);
 
-const whichPage = () => {
+
+    const whichPage = () => {
 
     if (userName === 'alku') return (<NaytaTuotteet></NaytaTuotteet>)
 
@@ -29,15 +34,17 @@ const whichPage = () => {
 
 }
 
+
 return (
     <div>
         <header className={"App-header"}>Huoltokirjat</header>
         <SigninContext.Provider
-            value={{ userName, setUserName, displayProfile, setDisplayProfile }}
+            value={{ userName, setUserName, displayProfile, setDisplayProfile, user, setUser }}
         >
             {whichPage()}
         </SigninContext.Provider>
         <footer className={"App-footer"}>
+            <Login></Login>
             <a href={"/"}>Etusivu</a>
             <button onClick={event => setUserName('lisaa')}>Lisää uusi laite</button>
             </footer>
