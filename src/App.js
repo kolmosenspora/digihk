@@ -3,34 +3,34 @@ import NaytaTuotteet from "./NaytaTuotteet";
 import TallennaTuote from "./TallennaTuote";
 import { createContext } from "react";
 import NaytaYksiTuote from "./NaytaYksiTuote";
-import {Route, Router, Routes} from "react-router-dom";
 import TuoteAville from "./TuoteAville";
 import Login from "./Login";
-import {Auth0Client} from "@auth0/auth0-spa-js";
 export const SigninContext = createContext({})
 
 function App() {
-    const [userName, setUserName] = React.useState('alku')
+    const [sivu, setSivu] = React.useState('alku')
     const [displayProfile, setDisplayProfile] = React.useState("tunnus")
-    const [user, setUser] = React.useState("null")
-
+    const [user, setUser] = React.useState('null')
+    const [token, setToken] = React.useState();
 
     useEffect(() => {
         if (window.location.pathname.includes('tuotenumero')) {
-            setUserName(window.location.search);
+            setSivu(window.location.search);
         }
     }, []);
 
 
     const whichPage = () => {
 
-    if (userName === 'alku') return (<NaytaTuotteet></NaytaTuotteet>)
+    if (user === 'null') {return (<Login></Login>)}
 
-    if (userName === 'lisaa') return (<TallennaTuote></TallennaTuote>)
+    if (sivu === 'alku') return (<NaytaTuotteet></NaytaTuotteet>)
 
-    if (userName === 'naytatuote') return (<NaytaYksiTuote></NaytaYksiTuote>)
+    if (sivu === 'lisaa') return (<TallennaTuote></TallennaTuote>)
 
-    if (userName.includes('?')) return (<TuoteAville></TuoteAville>)
+    if (sivu === 'naytatuote') return (<NaytaYksiTuote></NaytaYksiTuote>)
+
+    if (sivu.includes('?')) return (<TuoteAville></TuoteAville>)
 
 }
 
@@ -39,14 +39,13 @@ return (
     <div>
         <header className={"App-header"}>Huoltokirjat</header>
         <SigninContext.Provider
-            value={{ userName, setUserName, displayProfile, setDisplayProfile, user, setUser }}
+            value={{ userName: sivu, setUserName: setSivu, displayProfile, setDisplayProfile, user, setUser, token, setToken }}
         >
             {whichPage()}
         </SigninContext.Provider>
         <footer className={"App-footer"}>
-            <Login></Login>
             <a href={"/"}>Etusivu</a>
-            <button onClick={event => setUserName('lisaa')}>Lisää uusi laite</button>
+            <button onClick={event => setSivu('lisaa')}>Lisää uusi laite</button>
             </footer>
     </div>
 
