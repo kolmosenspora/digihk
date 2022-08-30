@@ -5,6 +5,7 @@ import { createContext } from "react";
 import NaytaYksiTuote from "./NaytaYksiTuote";
 import TuoteAville from "./TuoteAville";
 import Login from "./Login";
+import Profile from "./Profile";
 export const SigninContext = createContext({})
 
 function App() {
@@ -41,6 +42,7 @@ return (
         <SigninContext.Provider
             value={{ userName: sivu, setUserName: setSivu, displayProfile, setDisplayProfile, user, setUser, token, setToken }}
         >
+            <h1>Kirjautuneena: {user}</h1>
             {whichPage()}
         </SigninContext.Provider>
         <footer className={"App-footer"}>
