@@ -26,9 +26,31 @@ services:
       ## enable debugging mode. It is recommended to disable this in production
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_SERVER_PORT: 8080
       ## uncomment next line to set an admin secret
     ##  HASURA_GRAPHQL_ADMIN_SECRET: 'myadminsecretkey'
     ##  HASURA_GRAPHQL_JWT_SECRET: '{"type": "RS512", "key": "-----BEGIN CERTIFICATE-----\nMIIDDTCCAfWgAwIBAgIJDej8OIvBF7KgMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\nBAMTGWRldi1nY2Fmdml1ZS51cy5hdXRoMC5jb20wHhcNMjIwODE2MTMxOTEwWhcN\nMzYwNDI0MTMxOTEwWjAkMSIwIAYDVQQDExlkZXYtZ2NhZnZpdWUudXMuYXV0aDAu\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1bo16hdygMtzxTRQ\nPsUEOzGQ6G03Lfn57SI32okAW9iqqhNyMd01cQOslE5/StfI9Gvao+iuyk2FlBIc\nRD+CDE7cOMD5YiuAwhQFRtFipDzKJ4jEr49O9gbqDjTd1yGV5K7LqRdr0bGSNLGd\n5Q/TgggG8vPN8Tdv9tlilgJIpZiIf+/qPf3RqnVbhxPp8Ip6VOuEedCuoyWBIb9G\nlTQBoXNzrdoXdWwzdXjiRYdIU2+7cTOf5LpQY+Pobh+bP5tMJGVgKNt5bUosPuZr\n0bLMk78JzMAnrqFvIsrrXBphKUR83nV8LmXWVXeD5aDciMMqt8AItbVOZVp2yE2g\nZOs+ywIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBR4FIpyyGmM\nZ5IXX5FPoz8B5O+LSTAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\nAGayg5TRzV7l4if2vrJ/hCg67miFf364m7F81LUfxRMFFhURYAM1WvIscRMlTEX5\nrTYLHx/Wt3Az7iVB24N0fRqHKIjePNaRj3Avm3VMeiDHOptpVnULLUEMVkg+NcM5\n1e48h9IlFXO5+UsbdPrahGIqrYXsewkZMVi9w3XVwF9tLpnevlVtuHk/sRbU06hj\nzvnwXgKGDz+FH/4m/tyL5jtBWSGmy5QtkEfKKH1QwtU4AhfHc9On8r7CO8pPw6hV\n5jdcjir33+8O6ro/UaGIv2FH/aAI1mROgtVoeBVKsZJZahWaGzJAEQ/0csl+FPvs\nGjTN32MgNqZ/ZEjQjDBV3z0=\n-----END CERTIFICATE-----"}'
+  graphql1-engine1:
+    image: hasura/graphql-engine:v2.10.0
+    ports:
+      - "8081:8081"
+    depends_on:
+      - "postgres"
+    restart: always
+    environment:
+      ## postgres database to store Hasura metadata
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+      PG_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_SERVER_PORT: 8081
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_ADMIN_SECRET: 'myadminsecretkey'
+      HASURA_GRAPHQL_JWT_SECRET: '{"type": "RS512", "key": "-----BEGIN CERTIFICATE-----\nMIIDDTCCAfWgAwIBAgIJDej8OIvBF7KgMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\nBAMTGWRldi1nY2Fmdml1ZS51cy5hdXRoMC5jb20wHhcNMjIwODE2MTMxOTEwWhcN\nMzYwNDI0MTMxOTEwWjAkMSIwIAYDVQQDExlkZXYtZ2NhZnZpdWUudXMuYXV0aDAu\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1bo16hdygMtzxTRQ\nPsUEOzGQ6G03Lfn57SI32okAW9iqqhNyMd01cQOslE5/StfI9Gvao+iuyk2FlBIc\nRD+CDE7cOMD5YiuAwhQFRtFipDzKJ4jEr49O9gbqDjTd1yGV5K7LqRdr0bGSNLGd\n5Q/TgggG8vPN8Tdv9tlilgJIpZiIf+/qPf3RqnVbhxPp8Ip6VOuEedCuoyWBIb9G\nlTQBoXNzrdoXdWwzdXjiRYdIU2+7cTOf5LpQY+Pobh+bP5tMJGVgKNt5bUosPuZr\n0bLMk78JzMAnrqFvIsrrXBphKUR83nV8LmXWVXeD5aDciMMqt8AItbVOZVp2yE2g\nZOs+ywIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBR4FIpyyGmM\nZ5IXX5FPoz8B5O+LSTAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\nAGayg5TRzV7l4if2vrJ/hCg67miFf364m7F81LUfxRMFFhURYAM1WvIscRMlTEX5\nrTYLHx/Wt3Az7iVB24N0fRqHKIjePNaRj3Avm3VMeiDHOptpVnULLUEMVkg+NcM5\n1e48h9IlFXO5+UsbdPrahGIqrYXsewkZMVi9w3XVwF9tLpnevlVtuHk/sRbU06hj\nzvnwXgKGDz+FH/4m/tyL5jtBWSGmy5QtkEfKKH1QwtU4AhfHc9On8r7CO8pPw6hV\n5jdcjir33+8O6ro/UaGIv2FH/aAI1mROgtVoeBVKsZJZahWaGzJAEQ/0csl+FPvs\nGjTN32MgNqZ/ZEjQjDBV3z0=\n-----END CERTIFICATE-----"}'
 volumes:
   db_data:
 
