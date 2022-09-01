@@ -33,7 +33,7 @@ query MyQuery($yritys: String!) {
     const yritys = user.email;
 
     const { loading, error, data } = useQuery(GET_TUOTTEET, {
-        variables: { yritys },
+        variables: { yritys: yritys },
     });
 
     const naytaTuote = (tyokone) => {

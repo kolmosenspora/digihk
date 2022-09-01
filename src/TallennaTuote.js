@@ -2,8 +2,11 @@ import './App.css';
 import { gql, useMutation } from '@apollo/client';
 import React, {useContext, useState} from "react";
 import {SigninContext} from "./App";
+import {useAuth0} from "@auth0/auth0-react";
 
 function TallennaTuote() {
+    const { user } = useAuth0();
+
 
     const ADD_TODO = gql`
   mutation MyMutation($type: String!, $lisatietoja: String!, $malli: String!, $vapaateksti: String!, $yritys: String!) {
@@ -16,9 +19,11 @@ function TallennaTuote() {
 
     const [addTodo, { data, loading, error }] = useMutation(ADD_TODO);
 
-    const { setUserName, user } = useContext(SigninContext)
+    const yritys = user.email;
+
+    const { setUserName } = useContext(SigninContext)
     const saveTuote = () => {
-        addTodo({variables: {type: tuotenimi, lisatietoja: lisatietoja, malli: malli, vapaateksti: vapaateksti, yritys: user}}).then(r => console.log(r));
+        addTodo({variables: {type: tuotenimi, lisatietoja: lisatietoja, malli: malli, vapaateksti: vapaateksti, yritys: yritys}}).then(r => console.log(r));
         setUserName('alku')
      }
 
