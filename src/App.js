@@ -4,26 +4,30 @@ import TallennaTuote from "./TallennaTuote";
 import { createContext } from "react";
 import NaytaYksiTuote from "./NaytaYksiTuote";
 import TuoteAville from "./TuoteAville";
-import Login from "./Login";
-import Profile from "./Profile";
+import LoginPage from "./LoginPage";
+import {useAuth0} from "@auth0/auth0-react";
 export const SigninContext = createContext({})
 
 function App() {
+    const { user, isAuthenticated } = useAuth0();
     const [sivu, setSivu] = React.useState('alku')
     const [displayProfile, setDisplayProfile] = React.useState("tunnus")
-    const [user, setUser] = React.useState('null')
     const [token, setToken] = React.useState();
 
     useEffect(() => {
         if (window.location.pathname.includes('tuotenumero')) {
             setSivu(window.location.search);
         }
-    }, []);
+
+        if (isAuthenticated) {
+            localStorage.setItem("username", user.email)
+        }
+    }, [user]);
 
 
     const whichPage = () => {
 
-    if (user === 'null') {return (<Login></Login>)}
+    if (!isAuthenticated) {return (<LoginPage></LoginPage>)}
 
     if (sivu === 'alku') return (<NaytaTuotteet></NaytaTuotteet>)
 
@@ -36,13 +40,14 @@ function App() {
 }
 
 
+
 return (
     <div>
         <header className={"App-header"}>Huoltokirjat</header>
         <SigninContext.Provider
-            value={{ userName: sivu, setUserName: setSivu, displayProfile, setDisplayProfile, user, setUser, token, setToken }}
+            value={{ userName: sivu, setUserName: setSivu, displayProfile, setDisplayProfile, token, setToken }}
         >
-            <h1>Kirjautuneena: {user}</h1>
+            {user? <h1>Kirjautuneena: {user.email}</h1> : ""}
             {whichPage()}
         </SigninContext.Provider>
         <footer className={"App-footer"}>
